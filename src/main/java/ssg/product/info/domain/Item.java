@@ -1,9 +1,12 @@
 package ssg.product.info.domain;
 
+import lombok.Getter;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 public class Item {
     @Id
     @Column(name = "itemid")

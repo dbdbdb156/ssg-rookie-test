@@ -1,11 +1,14 @@
 package ssg.product.info.domain;
 
+import lombok.Getter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
 public class Promotion {
 
     @Id
