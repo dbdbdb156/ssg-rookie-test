@@ -2,7 +2,6 @@ package ssg.product.info.service;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ssg.product.info.domain.User;
@@ -16,7 +15,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Getter
 public class UserService {
-    @Autowired
     private final UserRepository userRepository;
 
     @Transactional

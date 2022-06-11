@@ -3,19 +3,20 @@ package ssg.product.info.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.format.annotation.DateTimeFormat;
-import ssg.product.info.domain.ItemType;
+import org.springframework.lang.Nullable;
 
 import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
-public class ItemDTO {
-    private String itemname;
-    private ItemType itemType;
-    private Long itemPrice;
+public class PromotionDTO {
+    private String promotionNm;
+    private Long discountAmount;
+    private Double discountRate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate itemDisplayStartDate;
+    private LocalDate promotionStartDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate itemDisplayEndDate;
+    private LocalDate promotionEndDate;
+
 
 }
