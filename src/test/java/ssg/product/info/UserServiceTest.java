@@ -43,7 +43,8 @@ public class UserServiceTest {
         when(userRepository.save(any())).thenReturn(user);
 
         assertNotNull(userService);
-        assertEquals(1L,userService.createNewUser(userDTO));
+        userService.createNewUser(userDTO);
+        assertEquals(user.getId(),userService.createNewUser(userDTO));
     }
 
     @DisplayName(value="delete user Exist")

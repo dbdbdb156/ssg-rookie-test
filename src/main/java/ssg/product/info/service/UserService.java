@@ -15,7 +15,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Getter
-@Transactional(readOnly = false)
 public class UserService {
     @Autowired
     private final UserRepository userRepository;

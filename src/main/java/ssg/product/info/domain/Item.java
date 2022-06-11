@@ -1,15 +1,23 @@
 package ssg.product.info.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Item {
     @Id
     @Column(name = "itemid")
+    @GeneratedValue
     private Long id;
 
     private String itemname;
@@ -19,9 +27,9 @@ public class Item {
 
     private Long itemPrice;
 
-    private LocalDateTime itemDisplayStartDate;
+    private LocalDate itemDisplayStartDate;
 
-    private LocalDateTime itemDisplayEndDate;
+    private LocalDate itemDisplayEndDate;
 
 
 }
