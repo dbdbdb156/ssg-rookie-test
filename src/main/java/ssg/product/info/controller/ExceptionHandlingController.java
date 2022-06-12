@@ -4,10 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import ssg.product.info.exception.NoExistItemException;
-import ssg.product.info.exception.NoExistPromotionException;
-import ssg.product.info.exception.NoExistUserException;
-import ssg.product.info.exception.WithdrawalException;
+import ssg.product.info.dto.ErrorDTO;
+import ssg.product.info.dto.ResponseDTO;
+import ssg.product.info.exception.*;
 
 @ControllerAdvice
 public class ExceptionHandlingController extends Exception{
@@ -31,4 +30,23 @@ public class ExceptionHandlingController extends Exception{
     public ResponseEntity withdrawalError(){
         return new ResponseEntity("유저가 탈퇴하였습니다",HttpStatus.UNAUTHORIZED);
     }
+
+    @ExceptionHandler(NoExistPromotionItemException.class)
+    public ResponseEntity promotionItemExistError(){
+        ResponseDTO body = new ResponseDTO(false, null, new ErrorDTO(HttpStatus.NOT_FOUND, "프로모션상품이 존재하지 않습니다"));
+        return new ResponseEntity(body,HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DiscountPolicyNotExistException.class)
+    public ResponseEntity discountPolicyNotExist(){
+        return new ResponseEntity("",HttpStatus.NOT_FOUND);
+    }
+    @ExceptionHandler(MultiDiscountPolicyException.class)
+    public ResponseEntity multiDiscountPolicy(){
+        return new ResponseEntity("",HttpStatus.NOT_FOUND);
+    }
+
+
+
+
 }

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ssg.product.info.domain.*;
-import ssg.product.info.exception.NoExistItemException;
 import ssg.product.info.exception.WithdrawalException;
 import ssg.product.info.repository.ItemRepository;
 import ssg.product.info.repository.UserRepository;

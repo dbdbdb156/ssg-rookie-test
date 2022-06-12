@@ -7,16 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ssg.product.info.domain.Item;
-import ssg.product.info.domain.ItemType;
 import ssg.product.info.domain.Promotion;
-import ssg.product.info.dto.ItemDTO;
 import ssg.product.info.dto.PromotionDTO;
-import ssg.product.info.exception.NoExistItemException;
 import ssg.product.info.exception.NoExistPromotionException;
-import ssg.product.info.repository.ItemRepository;
 import ssg.product.info.repository.PromotionRepository;
-import ssg.product.info.service.ItemService;
 import ssg.product.info.service.PromotionService;
 
 import java.time.LocalDate;
@@ -80,7 +74,7 @@ class PromotionServiceTest {
 
     @DisplayName(value="delete promotion No Exist")
     @Test
-    void delete_user_no_exist(@Mock PromotionRepository promotionRepository) throws NoExistPromotionException {
+    void delete_user_no_exist(@Mock PromotionRepository promotionRepository){
 
         PromotionService promotionService = new PromotionService(promotionRepository);
 

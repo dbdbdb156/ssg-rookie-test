@@ -9,16 +9,11 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ssg.product.info.domain.*;
 import ssg.product.info.dto.ItemDTO;
-import ssg.product.info.dto.UserDTO;
 import ssg.product.info.exception.NoExistItemException;
-import ssg.product.info.exception.NoExistUserException;
 import ssg.product.info.repository.ItemRepository;
-import ssg.product.info.repository.UserRepository;
 import ssg.product.info.service.ItemService;
-import ssg.product.info.service.UserService;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -78,7 +73,7 @@ class ItemServiceTest {
 
     @DisplayName(value="delete item No Exist")
     @Test
-    void delete_user_no_exist(@Mock ItemRepository itemRepository) throws NoExistItemException {
+    void delete_user_no_exist(@Mock ItemRepository itemRepository){
 
         ItemService itemService = new ItemService(itemRepository);
         Item item = Item.builder()

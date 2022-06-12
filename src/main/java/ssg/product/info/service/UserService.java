@@ -33,9 +33,7 @@ public class UserService {
     @Transactional
     public void deleteUser(Long userid) throws NoExistUserException {
         Optional<User> user = userRepository.findById(userid);
-        if(user.isEmpty()) {
-            throw new NoExistUserException("없는 유저라 삭제가 불가능합니다.");
-        }
+        isUserExist(user);
         userRepository.deleteById(userid);
     }
 

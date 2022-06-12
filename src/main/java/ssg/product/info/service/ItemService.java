@@ -1,19 +1,13 @@
 package ssg.product.info.service;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.jni.Local;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ssg.product.info.domain.Item;
-import ssg.product.info.domain.ItemType;
-import ssg.product.info.domain.UserStat;
-import ssg.product.info.domain.UserType;
+import ssg.product.info.domain.*;
 import ssg.product.info.dto.ItemDTO;
 import ssg.product.info.exception.NoExistItemException;
 import ssg.product.info.repository.ItemRepository;
-import ssg.product.info.repository.UserRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -42,9 +36,7 @@ public class ItemService {
     @Transactional
     public void deleteItem(Long itemid) throws NoExistItemException {
         Optional<Item> item = itemRepository.findById(itemid);
-        if(item.isEmpty()) {
-            throw new NoExistItemException("없는 상품이라 삭제가 불가능합니다.");
-        }
+        isItemExist(item);
         itemRepository.deleteById(itemid);
     }
 
@@ -64,5 +56,15 @@ public class ItemService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public Optional<Item> getItem(Long itemid){
+        return itemRepository.findById(itemid);
+    }
+
+    public void isItemExist(Optional<Item> item) throws NoExistItemException {
+        if(item.isEmpty()){
+            throw new NoExistItemException("유저가 존재 하지 않습니다.");
+        }
+    }
 
 }

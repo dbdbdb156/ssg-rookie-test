@@ -4,11 +4,8 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ssg.product.info.domain.Promotion;
 import ssg.product.info.domain.PromotionItem;
-import ssg.product.info.dto.PromotionDTO;
 import ssg.product.info.dto.PromotionItemDTO;
-import ssg.product.info.exception.NoExistPromotionException;
 import ssg.product.info.exception.NoExistPromotionItemException;
 import ssg.product.info.repository.PromotionItemRepository;
 

@@ -10,7 +10,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ssg.product.info.domain.PromotionItem;
 import ssg.product.info.dto.PromotionItemDTO;
 import ssg.product.info.exception.NoExistPromotionItemException;
-import ssg.product.info.exception.NoExistUserException;
 import ssg.product.info.repository.PromotionItemRepository;
 import ssg.product.info.service.PromotionItemService;
 

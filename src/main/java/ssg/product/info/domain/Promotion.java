@@ -35,6 +35,11 @@ public class Promotion {
 
     private LocalDate promotionEndDate;
 
-
+    public Long discountPriceAmount(Long value){
+        return value-this.discountAmount;
+    }
+    public Long discountPriceRate(Long value){
+        return value-(long)(value*this.discountRate);
+    }
 
 }
