@@ -1,6 +1,7 @@
 package ssg.product.info.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,12 +23,12 @@ public class PromotionController {
                                     PromotionDTO promotionDTO
     ){
         promotionService.createNewPromotion(promotionDTO);
-        return ResponseEntity.ok("make promotion "+promotionDTO.getPromotionNm());
+        return new ResponseEntity("make promotion "+promotionDTO.getPromotionNm(), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/api/promotion/{promotionid}")
     public ResponseEntity deleteUser(HttpServletRequest req, @PathVariable(value="promotionid") Long promotionid) throws NoExistPromotionException {
         promotionService.deletePromotion(promotionid);
-        return ResponseEntity.ok("delete promotion "+promotionid);
+        return new ResponseEntity("delete promotion "+promotionid,HttpStatus.NO_CONTENT);
     }
 }
