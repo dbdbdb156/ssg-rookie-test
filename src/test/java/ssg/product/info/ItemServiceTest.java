@@ -35,18 +35,18 @@ class ItemServiceTest {
 
         Item item = Item.builder()
                 .id(1L)
-                .itemname(itemDTO.getItemname())
-                .itemType(itemDTO.getItemType())
-                .itemPrice(itemDTO.getItemPrice())
-                .itemDisplayStartDate(itemDTO.getItemDisplayStartDate())
-                .itemDisplayEndDate(itemDTO.getItemDisplayEndDate())
+                .itemname(itemDTO.getName())
+                .itemType(itemDTO.getType())
+                .itemPrice(itemDTO.getPrice())
+                .itemDisplayStartDate(itemDTO.getDisplayStartDate())
+                .itemDisplayEndDate(itemDTO.getDisplayEndDate())
                 .build();
 
         when(itemRepository.save(any())).thenReturn(item);
 
         assertNotNull(itemService);
         itemService.createNewItem(itemDTO);
-        assertEquals(item.getId(),itemService.createNewItem(itemDTO));
+        assertEquals(item.getId(),itemService.createNewItem(itemDTO).getId());
     }
 
     @DisplayName(value="delete item Exist")

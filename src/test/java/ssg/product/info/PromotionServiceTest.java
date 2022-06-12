@@ -35,18 +35,18 @@ class PromotionServiceTest {
                         null,LocalDate.of(2022,5,1),
                         LocalDate.of(2022,7,1));
         Promotion promotion = Promotion.builder()
-                .promotionNm(promotionDTO.getPromotionNm())
+                .promotionNm(promotionDTO.getName())
                 .discountAmount(promotionDTO.getDiscountAmount())
                 .discountRate(promotionDTO.getDiscountRate())
-                .promotionStartDate(promotionDTO.getPromotionStartDate())
-                .promotionEndDate(promotionDTO.getPromotionEndDate())
+                .promotionStartDate(promotionDTO.getStartDate())
+                .promotionEndDate(promotionDTO.getEndDate())
                 .build();
 
         when(promotionRepository.save(any())).thenReturn(promotion);
 
         assertNotNull(promotionService);
         promotionService.createNewPromotion(promotionDTO);
-        assertEquals(promotion.getId(),promotionService.createNewPromotion(promotionDTO));
+        assertEquals(promotion.getId(),promotionService.createNewPromotion(promotionDTO).getId());
     }
 
     @DisplayName(value="delete promotion Exist")

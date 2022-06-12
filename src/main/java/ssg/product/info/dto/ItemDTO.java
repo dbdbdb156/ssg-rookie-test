@@ -10,12 +10,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 public class ItemDTO {
-    private String itemname;
-    private ItemType itemType;
-    private Long itemPrice;
+    private String name;
+    private ItemType type;
+    private Long price;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate itemDisplayStartDate;
+    private LocalDate displayStartDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate itemDisplayEndDate;
+    private LocalDate displayEndDate;
 
 }

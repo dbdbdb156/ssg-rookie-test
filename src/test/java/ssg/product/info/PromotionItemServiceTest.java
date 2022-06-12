@@ -32,15 +32,15 @@ class PromotionItemServiceTest {
 
         PromotionItem promotionItem = PromotionItem.builder()
                 .id(1L)
-                .promotionId(promotionItemDTO.getPromotionid())
-                .itemId(promotionItemDTO.getItemid())
+                .promotionId(promotionItemDTO.getPromotionId())
+                .itemId(promotionItemDTO.getItemId())
                 .build();
 
         when(promotionItemRepository.save(any())).thenReturn(promotionItem);
 
         assertNotNull(promotionItemService);
         promotionItemService.createNewPromotionItem(promotionItemDTO);
-        assertEquals(promotionItem.getId(),promotionItemService.createNewPromotionItem(promotionItemDTO));
+        assertEquals(promotionItem.getId(),promotionItemService.createNewPromotionItem(promotionItemDTO).getId());
     }
 
     @DisplayName(value="delete promotionItem Exist")

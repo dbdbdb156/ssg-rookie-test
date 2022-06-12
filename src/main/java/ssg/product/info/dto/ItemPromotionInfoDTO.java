@@ -11,6 +11,6 @@ import ssg.product.info.domain.Promotion;
 @Builder
 public class ItemPromotionInfoDTO {
     private Item item;
-    private Long discountPrcie;
+    private Long discountPrice;
     private Promotion promotion;
 }

@@ -20,7 +20,7 @@ import java.time.LocalDate;
 public class Promotion {
 
     @Id
-    @Column(name = "promotionid")
+    @Column(name = "promotionId")
     @GeneratedValue
     private Long id;
 

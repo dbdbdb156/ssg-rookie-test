@@ -8,8 +8,6 @@ import ssg.product.info.domain.Item;
 import ssg.product.info.domain.Promotion;
 import ssg.product.info.dto.ItemPromotionInfoDTO;
 import ssg.product.info.dto.PromotionDTO;
-import ssg.product.info.exception.DiscountPolicyNotExistException;
-import ssg.product.info.exception.MultiDiscountPolicyException;
 import ssg.product.info.exception.NoExistPromotionException;
 import ssg.product.info.repository.PromotionRepository;
 
@@ -26,17 +24,17 @@ public class PromotionService {
     private final PromotionRepository promotionRepository;
 
     @Transactional
-    public Long createNewPromotion(PromotionDTO promotionDTO){
+    public Promotion createNewPromotion(PromotionDTO promotionDTO){
 
         Promotion promotion = Promotion.builder()
-                .promotionNm(promotionDTO.getPromotionNm())
+                .promotionNm(promotionDTO.getName())
                 .discountAmount(promotionDTO.getDiscountAmount())
                 .discountRate(promotionDTO.getDiscountRate())
-                .promotionStartDate(promotionDTO.getPromotionStartDate())
-                .promotionEndDate(promotionDTO.getPromotionEndDate())
+                .promotionStartDate(promotionDTO.getStartDate())
+                .promotionEndDate(promotionDTO.getEndDate())
                 .build();
 
-        return promotionRepository.save(promotion).getId();
+        return promotionRepository.save(promotion);
     }
 
     @Transactional
@@ -57,20 +55,19 @@ public class PromotionService {
         }
         LocalDate now = LocalDate.now();
         return list.stream().filter(promotion-> promotion.getPromotionStartDate().compareTo(now)<=0
-                && promotion.getPromotionEndDate().compareTo(now) >= 0 )
+                && promotion.getPromotionEndDate().compareTo(now) >= 0
+                && ( (promotion.getDiscountAmount()==null && promotion.getDiscountRate() != null)  ||
+                        (promotion.getDiscountAmount()!=null) && promotion.getDiscountRate() == null ))
                 .collect(Collectors.toList());
     }
 
-    public ItemPromotionInfoDTO choiceBestPromotion(Item item, List<Promotion> promotions) throws NoExistPromotionException, DiscountPolicyNotExistException, MultiDiscountPolicyException {
+    public ItemPromotionInfoDTO choiceBestPromotion(Item item, List<Promotion> promotions) throws NoExistPromotionException{
         Long price = item.getItemPrice();
         Long minPrice = Long.MAX_VALUE;
         int idx = -1;
         for(int i=0;i<promotions.size();++i){
             Promotion promotion = promotions.get(i);
             if(promotion.getDiscountAmount()==null){
-                if(promotion.getDiscountRate()==null){
-                    throw new DiscountPolicyNotExistException("할인정책이 존재하지 않습니다.");
-                }
                 Long discountPrice = promotion.discountPriceRate(price);
                 System.out.println(discountPrice);
                 if(discountPrice.compareTo(0L)>0 && discountPrice.compareTo(minPrice)<0){
@@ -79,9 +76,6 @@ public class PromotionService {
                 }
             }
             else{
-                if(promotion.getDiscountRate()!=null){
-                    throw new MultiDiscountPolicyException("할인정책 여러가지 입니다.");
-                }
                 Long discountPrice = promotion.discountPriceAmount(price);
                 System.out.println(discountPrice);
                 if(discountPrice.compareTo(0L)>0 && discountPrice.compareTo(minPrice)<0){
@@ -97,7 +91,7 @@ public class PromotionService {
         return ItemPromotionInfoDTO.builder()
                 .promotion(promotions.get(idx))
                 .item(item)
-                .discountPrcie(minPrice)
+                .discountPrice(minPrice)
                 .build();
 
     }

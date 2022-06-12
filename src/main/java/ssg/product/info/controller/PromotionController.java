@@ -6,11 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ssg.product.info.domain.Item;
 import ssg.product.info.domain.Promotion;
-import ssg.product.info.dto.ItemPromotionInfoDTO;
-import ssg.product.info.dto.PromotionDTO;
-import ssg.product.info.dto.RequestIdDTO;
-import ssg.product.info.exception.DiscountPolicyNotExistException;
-import ssg.product.info.exception.MultiDiscountPolicyException;
+import ssg.product.info.dto.*;
 import ssg.product.info.exception.NoExistItemException;
 import ssg.product.info.exception.NoExistPromotionException;
 import ssg.product.info.service.ItemService;
@@ -22,24 +18,26 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/v1/api")
 public class PromotionController {
     private final PromotionService promotionService;
     private final ItemService itemService;
     private final PromotionItemService promotionItemService;
 
-    @PostMapping("/api/promotion")
+    @PostMapping("/promotion")
     public ResponseEntity inputUser(PromotionDTO promotionDTO){
-        promotionService.createNewPromotion(promotionDTO);
-        return new ResponseEntity("make promotion "+promotionDTO.getPromotionNm(), HttpStatus.CREATED);
+        Promotion promotion = promotionService.createNewPromotion(promotionDTO);
+        ResponseDTO body = new ResponseDTO(true, new ContentDTO(201L,HttpStatus.CREATED,"make promotion",promotion), null);
+        return new ResponseEntity(body, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/api/promotion")
+    @DeleteMapping("/promotion")
     public ResponseEntity deleteUser(RequestIdDTO promotionidDTO) throws NoExistPromotionException {
         promotionService.deletePromotion(promotionidDTO.getId());
-        return new ResponseEntity("delete promotion "+promotionidDTO.getId(),HttpStatus.NO_CONTENT);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-    @GetMapping("/api/promotions")
-    public ResponseEntity applyPromotionsToItem(RequestIdDTO itemidDTO) throws NoExistItemException, NoExistPromotionException, DiscountPolicyNotExistException, MultiDiscountPolicyException {
+    @GetMapping("/promotions")
+    public ResponseEntity applyPromotionsToItem(RequestIdDTO itemidDTO) throws NoExistItemException, NoExistPromotionException{
 
         Optional<Item> item = itemService.getItem(itemidDTO.getId());
         itemService.isItemExist(item);
@@ -48,7 +46,8 @@ public class PromotionController {
         List<Promotion> promotions = promotionService.promotionsForItems(promotionsId);
         ItemPromotionInfoDTO info = promotionService.choiceBestPromotion(item.get(), promotions);
 
-        return new ResponseEntity(info,HttpStatus.OK);
+        ResponseDTO body = new ResponseDTO(true, new ContentDTO(200L,HttpStatus.OK,"apply promotion",info), null);
+        return new ResponseEntity(body,HttpStatus.OK);
     }
 
 

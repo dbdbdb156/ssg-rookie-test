@@ -19,14 +19,14 @@ public class PromotionItemService {
     private final PromotionItemRepository promotionItemRepository;
 
     @Transactional
-    public Long createNewPromotionItem(PromotionItemDTO promotionItemDTO){
+    public PromotionItem createNewPromotionItem(PromotionItemDTO promotionItemDTO){
 
         PromotionItem promotionItem = PromotionItem.builder()
-                .promotionId(promotionItemDTO.getPromotionid())
-                .itemId(promotionItemDTO.getItemid())
+                .promotionId(promotionItemDTO.getPromotionId())
+                .itemId(promotionItemDTO.getItemId())
                 .build();
 
-        return promotionItemRepository.save(promotionItem).getId();
+        return promotionItemRepository.save(promotionItem);
     }
 
     @Transactional

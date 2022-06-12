@@ -20,14 +20,14 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Long createNewUser(UserDTO userDTO){
+    public User createNewUser(UserDTO userDTO){
         User user = User.builder()
-                .username(userDTO.getUsername())
-                .userType(userDTO.getUserType())
-                .userStat(userDTO.getUserStat())
+                .username(userDTO.getName())
+                .userType(userDTO.getType())
+                .userStat(userDTO.getStat())
                 .build();
         // id가 중복이 될 경우는 키를 자동 생성하기에 이미 있는 유저가 있을 경우는 없음.
-        return userRepository.save(user).getId();
+        return userRepository.save(user);
     }
 
     @Transactional

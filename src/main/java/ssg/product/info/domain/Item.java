@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Item {
     @Id
-    @Column(name = "itemid")
+    @Column(name = "itemId")
     @GeneratedValue
     private Long id;
 

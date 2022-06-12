@@ -5,27 +5,33 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ssg.product.info.domain.PromotionItem;
+import ssg.product.info.dto.ContentDTO;
 import ssg.product.info.dto.PromotionItemDTO;
 import ssg.product.info.dto.RequestIdDTO;
+import ssg.product.info.dto.ResponseDTO;
 import ssg.product.info.exception.NoExistPromotionItemException;
 import ssg.product.info.service.PromotionItemService;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/v1/api")
 public class PromotionItemController {
     private final PromotionItemService promotionItemService;
 
-    @PostMapping("/api/promotionitem")
+    @PostMapping("/promotionitem")
     public ResponseEntity inputPromotionItem(PromotionItemDTO promotionItemDTO){
-        promotionItemService.createNewPromotionItem(promotionItemDTO);
-        return new ResponseEntity("make PromotionItem ", HttpStatus.CREATED);
+        PromotionItem promotionItem = promotionItemService.createNewPromotionItem(promotionItemDTO);
+        ResponseDTO body = new ResponseDTO(true, new ContentDTO(201L,HttpStatus.CREATED,"make promotionItem",promotionItem), null);
+        return new ResponseEntity(body, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/api/promotionitem")
+    @DeleteMapping("/promotionitem")
     public ResponseEntity deleteUser(RequestIdDTO promotionItemidDTO) throws NoExistPromotionItemException {
         promotionItemService.deletePromotionItem(promotionItemidDTO.getId());
-        return new ResponseEntity("delete promotionItem "+promotionItemidDTO.getId(),HttpStatus.NO_CONTENT);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 }

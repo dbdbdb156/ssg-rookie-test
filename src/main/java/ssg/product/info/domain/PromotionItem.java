@@ -3,6 +3,7 @@ package ssg.product.info.domain;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +14,10 @@ import javax.persistence.Id;
 @Getter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class PromotionItem {
     @Id
-    @Column(name = "promotionitemid")
+    @Column(name = "promotionItemId")
     @GeneratedValue
     private Long id;
 

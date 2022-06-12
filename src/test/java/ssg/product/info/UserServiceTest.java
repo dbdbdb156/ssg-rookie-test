@@ -33,16 +33,16 @@ public class UserServiceTest {
         UserDTO userDTO = new UserDTO("홍길동",UserType.일반,UserStat.정상);
         User user = User.builder()
                 .id(1L)
-                .username(userDTO.getUsername())
-                .userType(userDTO.getUserType())
-                .userStat(userDTO.getUserStat())
+                .username(userDTO.getName())
+                .userType(userDTO.getType())
+                .userStat(userDTO.getStat())
                 .build();
 
         when(userRepository.save(any())).thenReturn(user);
 
         assertNotNull(userService);
         userService.createNewUser(userDTO);
-        assertEquals(user.getId(),userService.createNewUser(userDTO));
+        assertEquals(user.getId(),userService.createNewUser(userDTO).getId());
     }
 
     @DisplayName(value="delete user Exist")

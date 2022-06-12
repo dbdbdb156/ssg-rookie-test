@@ -11,6 +11,6 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @Getter
 public class PromotionItemDTO {
-    private Long promotionid;
-    private Long itemid;
+    private Long promotionId;
+    private Long itemId;
 }

@@ -4,27 +4,32 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ssg.product.info.domain.User;
+import ssg.product.info.dto.ContentDTO;
 import ssg.product.info.dto.RequestIdDTO;
+import ssg.product.info.dto.ResponseDTO;
 import ssg.product.info.dto.UserDTO;
 import ssg.product.info.exception.NoExistUserException;
 import ssg.product.info.service.UserService;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/v1/api")
 public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/api/user")
+    @PostMapping("/user")
     public ResponseEntity inputUser(UserDTO userDTO){
-        userService.createNewUser(userDTO);
-        return new ResponseEntity("make user "+userDTO.getUsername(), HttpStatus.CREATED);
+        User user = userService.createNewUser(userDTO);
+        ResponseDTO body = new ResponseDTO(true, new ContentDTO(201L,HttpStatus.CREATED,"make user",user), null);
+        return new ResponseEntity(body, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/api/user")
+    @DeleteMapping("/user")
     public ResponseEntity deleteUser(RequestIdDTO useridDTO) throws NoExistUserException {
         userService.deleteUser(useridDTO.getId());
-        return new ResponseEntity("delete user "+useridDTO.getId(),HttpStatus.NO_CONTENT);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
 

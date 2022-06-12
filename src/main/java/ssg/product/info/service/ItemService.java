@@ -22,15 +22,15 @@ public class ItemService {
     private final ItemRepository itemRepository;
 
     @Transactional
-    public Long createNewItem(ItemDTO itemDTO){
+    public Item createNewItem(ItemDTO itemDTO){
         Item item = Item.builder()
-                .itemname(itemDTO.getItemname())
-                .itemPrice(itemDTO.getItemPrice())
-                .itemType(itemDTO.getItemType())
-                .itemDisplayStartDate(itemDTO.getItemDisplayStartDate())
-                .itemDisplayEndDate(itemDTO.getItemDisplayEndDate())
+                .itemname(itemDTO.getName())
+                .itemPrice(itemDTO.getPrice())
+                .itemType(itemDTO.getType())
+                .itemDisplayStartDate(itemDTO.getDisplayStartDate())
+                .itemDisplayEndDate(itemDTO.getDisplayEndDate())
                 .build();
-        return itemRepository.save(item).getId();
+        return itemRepository.save(item);
     }
 
     @Transactional

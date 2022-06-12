@@ -6,8 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ssg.product.info.domain.Item;
 import ssg.product.info.domain.User;
-import ssg.product.info.dto.ItemDTO;
-import ssg.product.info.dto.RequestIdDTO;
+import ssg.product.info.dto.*;
 import ssg.product.info.exception.NoExistItemException;
 import ssg.product.info.exception.NoExistUserException;
 import ssg.product.info.exception.WithdrawalException;
@@ -19,36 +18,38 @@ import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/v1/api")
 public class ItemController {
     private final ItemService itemService;
     private final UserService userService;
 
     // 201 생성 성공
-    @PostMapping("/api/item")
-    public ResponseEntity inputUser(ItemDTO itemDTO){
-        itemService.createNewItem(itemDTO);
-        return new ResponseEntity("make item "+itemDTO.getItemname(), HttpStatus.CREATED);
+    @PostMapping("/item")
+    public ResponseEntity inputItem(ItemDTO itemDTO){
+        Item item = itemService.createNewItem(itemDTO);
+        ResponseDTO body = new ResponseDTO(true, new ContentDTO(201L,HttpStatus.CREATED,"make item",item), null);
+        return new ResponseEntity(body, HttpStatus.CREATED);
     }
 
     // 204 삭제 성공
-    @DeleteMapping("/api/item")
+    @DeleteMapping("/item")
     public ResponseEntity deleteItem(RequestIdDTO itemidDTO) throws NoExistItemException {
         itemService.deleteItem(itemidDTO.getId());
-        return new ResponseEntity("delete item "+itemidDTO.getId(),HttpStatus.NO_CONTENT);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     // 200 성공
-    @GetMapping("/api/items")
-    public ResponseEntity itemListforUser(RequestIdDTO itemidDTO) throws NoExistUserException, WithdrawalException {
+    @GetMapping("/items")
+    public ResponseEntity itemListforUser(RequestIdDTO userIdDTO) throws NoExistUserException, WithdrawalException {
 
-        Optional<User> user = userService.getUser(itemidDTO.getId());
+        Optional<User> user = userService.getUser(userIdDTO.getId());
 
         userService.isUserExist(user);
         userService.isUserWithdrawal(user.get().getUserStat());
 
         List<Item> list = itemService.itemListForUser(user.get().getUserType());
-
-        return new ResponseEntity(list,HttpStatus.OK);
+        ResponseDTO body = new ResponseDTO(true, new ContentDTO(200L,HttpStatus.OK,"items for user",list), null);
+        return new ResponseEntity(body,HttpStatus.OK);
     }
 
 }

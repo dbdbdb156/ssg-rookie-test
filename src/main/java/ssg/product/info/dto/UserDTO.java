@@ -9,8 +9,8 @@ import ssg.product.info.domain.UserType;
 @AllArgsConstructor
 @Getter
 public class UserDTO {
-    private String username;
-    private UserType userType;
-    private UserStat userStat;
+    private String name;
+    private UserType type;
+    private UserStat stat;
 
 }

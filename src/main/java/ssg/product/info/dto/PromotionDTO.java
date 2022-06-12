@@ -10,13 +10,13 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 public class PromotionDTO {
-    private String promotionNm;
+    private String name;
     private Long discountAmount;
     private Double discountRate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate promotionStartDate;
+    private LocalDate startDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate promotionEndDate;
+    private LocalDate endDate;
 
 
 }
